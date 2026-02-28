@@ -8,6 +8,7 @@ import com.zergatul.cheatutils.wrappers.AttackRange;
 import net.minecraft.client.Minecraft;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.entity.Entity;
+import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.item.AxeItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.SwordItem;
@@ -25,35 +26,54 @@ public class AutoAttack implements Module {
     }
 
     private void onClientTickEnd() {
-        if (mc.player == null) return;
+        if (mc.player == null || mc.level == null || mc.gameMode == null) {
+            return;
+        }
 
         AutoAttackConfig config = ConfigStore.instance.getConfig().autoAttackConfig;
-        if (!config.enabled) return;
+        if (!config.enabled) {
+            return;
+        }
 
-        // 1. Проверка: зажата ли клавиша атаки
-        if (!mc.options.keyAttack.isDown()) return;
+        // 1. УБРАЛИ ПРОВЕРКУ keyAttack.isDown()
+        // Теперь ЛКМ зажимать не нужно.
 
-        // 2. Проверка: находится ли игрок в прыжке (не на земле)
-        // Если нужно, чтобы работало только при падении (для критов), можно добавить: && mc.player.getDeltaMovement().y < 0
-        if (mc.player.onGround()) return;
-
-        // 3. Проверка: правильное ли оружие в руке
+        // 2. Проверяем оружие (Меч, Топор или Трезубец)
         ItemStack mainHandItem = mc.player.getMainHandItem();
         boolean isValidWeapon = mainHandItem.getItem() instanceof SwordItem || 
                                mainHandItem.getItem() instanceof AxeItem || 
                                mainHandItem.getItem() instanceof TridentItem;
         
-        if (!isValidWeapon) return;
+        if (!isValidWeapon) {
+            return;
+        }
 
-        // 4. Проверка цели
-        if (mc.hitResult == null || mc.hitResult.getType() != HitResult.Type.ENTITY) return;
+        // 3. Проверяем прыжок (onGround == false означает, что мы в воздухе)
+        if (mc.player.onGround()) {
+            return;
+        }
 
-        // 5. Проверка КД (кулдауна) атаки
-        if (mc.player.getAttackStrengthScale((float) -config.extraTicks) != 1) return;
+        // 4. Проверяем, наведен ли прицел на сущность
+        if (mc.hitResult == null || mc.hitResult.getType() != HitResult.Type.ENTITY) {
+            return;
+        }
 
-        Entity entity = ((EntityHitResult) mc.hitResult).getEntity();
-        if (AttackRange.canHit(entity)) {
-            mc.gameMode.attack(mc.player, entity);
+        Entity target = ((EntityHitResult) mc.hitResult).getEntity();
+
+        // Дополнительная проверка: бьем только живых (чтобы не лупить по рамкам или лодкам)
+        if (!(target instanceof LivingEntity)) {
+            return;
+        }
+
+        // 5. Проверяем кулдаун (заряд удара)
+        // Используем < 0.9f, чтобы удар был чуть более отзывчивым, или 1.0f для макс. урона
+        if (mc.player.getAttackStrengthScale((float) -config.extraTicks) < 1.0f) {
+            return;
+        }
+
+        // 6. Проверка дистанции и сам удар
+        if (AttackRange.canHit(target)) {
+            mc.gameMode.attack(mc.player, target);
             mc.player.swing(InteractionHand.MAIN_HAND);
         }
     }
