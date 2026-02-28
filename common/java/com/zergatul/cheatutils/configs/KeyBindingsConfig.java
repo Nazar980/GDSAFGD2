@@ -5,7 +5,7 @@ import java.util.Objects;
 
 public class KeyBindingsConfig implements ValidatableConfig, ModuleStateProvider {
 
-    public static final int KeysCount = 30;
+    public static final int KeysCount = 0;
 
     public String[] bindings = new String[KeysCount];
 
@@ -24,4 +24,5 @@ public class KeyBindingsConfig implements ValidatableConfig, ModuleStateProvider
     public boolean isEnabled() {
         return Arrays.stream(bindings).anyMatch(Objects::nonNull);
     }
+
 }
