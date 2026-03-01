@@ -3,7 +3,7 @@ import { getComponent } from '/components/Loader.js'
 
 const modules = {
     all: [],
-    automation1: {},
+    automation: {},
     esp: {},
     hacks1: {},
     visuals1: {},
@@ -21,112 +21,112 @@ const module = (params) => {
 // Automation Modules =================
 
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'Auto Disconnect',
     component: 'AutoDisconnect',
     path: 'auto-disconnect',
     tags: ['auto', 'disconnect']
 });
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'Auto Bucket',
     component: 'AutoBucket',
     path: 'auto-bucket',
     tags: ['auto', 'bucket', 'mlg', 'nofall', 'no', 'fall']
 });
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'Auto Fish',
     component: 'AutoFish',
     path: 'auto-fish',
     tags: ['auto', 'fish', 'fishing']
 });
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'Auto Totem',
     component: 'AutoTotem',
     path: 'auto-totem',
     tags: ['auto', 'totem']
 });
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'Auto Drop',
     component: 'AutoDrop',
     path: 'auto-drop',
     tags: ['auto', 'drop', 'inventory']
 });
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'Container Buttons',
     component: 'ContainerButtons',
     path: 'container-buttons',
     tags: ['container', 'buttons']
 });
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'Auto Eat',
     component: 'AutoEat',
     path: 'auto-eat',
     tags: ['auto', 'eat']
 });
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'Anti Respawn Reset',
     component: 'AntiRespawnReset',
     path: 'anti-respawn-reset',
     tags: ['anti', 'respawn', 'bed', 'anchor']
 });
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'Auto Craft',
     component: 'AutoCraft',
     path: 'auto-craft',
     tags: ['auto', 'craft']
 });
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'TriggerBot',
     component: 'AutoAttack',
     path: 'auto-attack',
     tags: ['auto', 'attack']
 });
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'Breach Swap',
     component: 'BreachSwap',
     path: 'breach-swap',
     tags: ['auto', 'attack', 'breach', 'mace', 'swap']
 });
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'Schematica',
     component: 'Schematica',
     path: 'schematica',
     tags: ['schematica']
 });
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'Auto Hotbar',
     component: 'AutoHotbar',
     path: 'auto-hotbar',
     tags: ['auto', 'hotbar']
 });
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'Auto Tool',
     component: 'AutoTool',
     path: 'auto-tool',
     tags: ['auto', 'tool']
 });
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'Spear Range',
     component: 'SpearRange',
     path: 'spear-range',
     tags: ['spear', 'reach', 'range']
 });
 module({
-    group: 'automation1',
+    group: 'automation',
     name: 'Shield breaker',
     component: 'AutoStunner',
     path: 'auto-stunner',
@@ -688,6 +688,7 @@ module({
 });
 
 export { modules }
+
 
 
 
